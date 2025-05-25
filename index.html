@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skizman Playlist</title>
+    <style>
+        /* CSS */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #1e1e1e, #3a0ca3, #ff0062);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 0, 102, 0.7), 0 0 20px rgba(255, 0, 102, 0.5), 0 0 40px rgba(255, 0, 102, 0.3);
+        }
+
+        .decorated-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .decorated-button:hover {
+            background-color: #ff0062;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 0, 102, 0.5);
+        }
+
+        /* إضافة تأثيرات إضافية للخلفية */
+        .background-effects {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .background-effects::before,
+        .background-effects::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 0, 102, 0.1);
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: floatEffect 15s infinite;
+        }
+
+        .background-effects::after {
+            animation-delay: -7.5s; /* تأخير لجعل الحركتين مختلفتين */
+        }
+
+        @keyframes floatEffect {
+            0% {
+                top: -20%;
+                left: -20%;
+                opacity: 0.7;
+            }
+            50% {
+                top: 120%;
+                left: 120%;
+                opacity: 0.3;
+            }
+            100% {
+                top: -20%;
+                left: -20%;
+                opacity: 0.7;
+            }
+        }
+
+        /* إضاءة حول الزر */
+        .decorated-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 0, 102, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .decorated-button:hover::before {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- خلفية متحركة -->
+    <div class="background-effects"></div>
+
+    <div class="container">
+        <h1>welcome to skizman playlist</h1>
+        <a href="home.html" class="decorated-button" id="customButton">Click on</a>
+    </div>
+
+    <script>
+        // JavaScript
+        document.getElementById('customButton').addEventListener('click', function () {
+            // يمكنك تعديل الرابط التالي إلى الصفحة التي تريدها
+            window.location.href = "home.html"; // أضف الرابط الخاص بك هنا
+        });
+    </script>
+</body>
+
+</html>

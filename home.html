@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Skizman Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #111;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .carousel-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 200px;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel {
+            position: relative;
+            width: 800px;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out;
+            margin: 0 auto;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            left: 50%;
+            top: 50%;
+            margin-left: -75px;
+            margin-top: -75px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            transform-origin: center;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Skizman Player</div>
+    </div>
+
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item" onclick="navigateToPage('p.html')">
+                <img src=/assets/images/starboy.jpg alt="Album 1">
+            </div>
+            <div class="carousel-item" onclick="navigateToPage('album.html')">
+                <img src=/album2/image/image1.jpg alt="Album 2">
+            </div>
+            <div class="carousel-item" onclick="navigateToPage('album2.html')">
+                <img src="/album3/image/image1.jpg" alt="Album 3">
+            </div>
+            <div class="carousel-item" onclick="navigateToPage('album3.html')">
+                <img src="/album4/image/image1.jpg "alt="Album 4">
+            </div>
+            <div class="carousel-item" onclick="navigateToPage('album4.html')">
+                <img src="/album5/image/image2.jpg " alt="Album 5">
+            </div>
+            <div class="carousel-item" onclick="navigateToPage('album5.html')">
+                <img src="/album6/image/image1.jpg" alt="Album 6">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const carouselContainer = document.querySelector('.carousel-container');
+        const carousel = document.querySelector('.carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        let currentAngle = 0;
+        const totalItems = items.length;
+        let rotationInterval;
+        let isHovered = false;
+
+        function updateCarousel() {
+            items.forEach((item, index) => {
+                const angle = (currentAngle + (index * (360 / totalItems))) * (Math.PI / 180);
+                const radius = 250;
+                const x = Math.cos(angle) * radius;
+                const z = Math.sin(angle) * radius;
+                const scale = (z + radius) / (radius * 2);
+                
+                item.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${0.7 + scale * 0.3})`;
+                item.style.opacity = 0.4 + scale * 0.6;
+                item.style.zIndex = Math.round((z + radius) * 100);
+            });
+        }
+
+        function startRotation() {
+            if (!isHovered) {
+                rotationInterval = setInterval(() => {
+                    currentAngle -= 0.5; // تم إبطاء السرعة
+                    updateCarousel();
+                }, 50);
+            }
+        }
+
+        function stopRotation() {
+            clearInterval(rotationInterval);
+        }
+
+        carouselContainer.addEventListener('mouseenter', () => {
+            isHovered = true;
+            stopRotation();
+        });
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            isHovered = false;
+            startRotation();
+        });
+
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const itemAngle = -(index * (360 / totalItems));
+                currentAngle = itemAngle;
+                updateCarousel();
+            });
+        });
+
+        function navigateToPage(url) {
+            window.location.href = url;
+        }
+
+        updateCarousel();
+        startRotation();
+
+        window.addEventListener('resize', updateCarousel);
+    </script>
+</body>
+</html>
